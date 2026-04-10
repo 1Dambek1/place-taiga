@@ -255,6 +255,7 @@ export const Hero = ({ onEnter }: any) => {
 
 export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
   const isDesktop = useIsDesktop();
+  const [activeHotelVideo, setActiveHotelVideo] = useState<string | null>(null);
 
   const hotelsData = [
     {
@@ -350,29 +351,58 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
               className={`group block relative ${
                 i % 2 !== 0 ? "md:translate-y-32" : ""
               }`}
-              onMouseEnter={() =>
-                isDesktop && (setHoverBg(h.themeBg), setTheme(h.themeId))
-              }
-              onMouseLeave={() =>
-                isDesktop && (setHoverBg(null), setTheme(null))
-              }
+              onMouseEnter={() => {
+                if (!isDesktop) return;
+                setHoverBg(h.themeBg);
+                setTheme(h.themeId);
+                setActiveHotelVideo(h.themeId);
+              }}
+              onMouseLeave={() => {
+                if (!isDesktop) return;
+                setHoverBg(null);
+                setTheme(null);
+                setActiveHotelVideo(null);
+              }}
             >
               {/* Контейнер медиа */}
               <div className="h-[280px] md:h-[450px] rounded-sm overflow-hidden mb-8 relative bg-white/50 shadow-2xl">
-                <motion.img
-                  src={
-                    h.poster
-                      ? withBasePath(
-                          h.poster.startsWith("/") ? h.poster : `/${h.poster}`,
-                        )
-                      : withBasePath(h.img)
-                  }
-                  alt={h.name}
-                  loading="lazy"
-                  whileHover={isDesktop ? { scale: 1.05 } : {}}
-                  transition={{ duration: 0.7 }}
-                  className="w-full h-full object-cover"
-                />
+                {isVideo(h.img) && isDesktop && activeHotelVideo === h.themeId ? (
+                  <motion.video
+                    key={`${h.themeId}-video`}
+                    src={encodeURI(withBasePath(h.img))}
+                    poster={
+                      h.poster
+                        ? withBasePath(
+                            h.poster.startsWith("/") ? h.poster : `/${h.poster}`,
+                          )
+                        : undefined
+                    }
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.7 }}
+                    className="w-full h-full object-cover pointer-events-none"
+                  />
+                ) : (
+                  <motion.img
+                    key={`${h.themeId}-poster`}
+                    src={
+                      h.poster
+                        ? withBasePath(
+                            h.poster.startsWith("/") ? h.poster : `/${h.poster}`,
+                          )
+                        : withBasePath(h.img)
+                    }
+                    alt={h.name}
+                    loading="lazy"
+                    whileHover={isDesktop ? { scale: 1.05 } : {}}
+                    transition={{ duration: 0.7 }}
+                    className="w-full h-full object-cover"
+                  />
+                )}
 
                 <div className="absolute top-4 right-4 bg-taiga-snow text-taiga-deep px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-widest shadow-lg z-10">
                   {h.type}
