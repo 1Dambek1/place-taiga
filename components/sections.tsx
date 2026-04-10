@@ -157,6 +157,13 @@ export const Hero = ({ onEnter }: any) => {
     "/videos/ТАЙГА.mp4",
   ];
 
+  const posters = [
+    "/japanese-zen-hotel-room-white-sakura-minimalist-ba.jpg",
+    "/historical-wooden-noble-hotel-dark-brown-interior.jpg",
+    "/elegant-comfortable-hotel-in-historic-city-center.jpg",
+    "/modern-bright-hotel-lobby-blue-white-green-colors.jpg",
+    "/forest-themed-hotel-green-nature-siberian-taiga.jpg",
+  ];
   const currentWord = words[index % words.length];
   const activeIndex = index % videos.length;
 
@@ -224,9 +231,10 @@ export const Hero = ({ onEnter }: any) => {
                 videoRefs.current[i] = el;
               }}
               src={encodeURI(withBasePath(src))}
+              poster={withBasePath(posters[i])}
               muted
               playsInline
-              preload="auto"
+              preload={i === activeIndex ? "metadata" : "none"}
               onEnded={() => {
                 if (i === activeIndex) setIndex((prev) => prev + 1);
               }}
@@ -351,30 +359,20 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
             >
               {/* Контейнер медиа */}
               <div className="h-[280px] md:h-[450px] rounded-sm overflow-hidden mb-8 relative bg-white/50 shadow-2xl">
-                {isVideo(h.img) ? (
-                  <motion.video
-                    src={encodeURI(withBasePath(h.img))}
-                    poster={h.poster ? withBasePath(h.poster) : ""}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    whileHover={isDesktop ? { scale: 1.05 } : {}}
-                    transition={{ duration: 0.7 }}
-                    className="w-full h-full object-cover pointer-events-none"
-                    onCanPlay={(e) => e.currentTarget.play()}
-                  />
-                ) : (
-                  <motion.img
-                    src={withBasePath(h.img)}
-                    alt={h.name}
-                    loading="lazy"
-                    whileHover={isDesktop ? { scale: 1.05 } : {}}
-                    transition={{ duration: 0.7 }}
-                    className="w-full h-full object-cover"
-                  />
-                )}
+                <motion.img
+                  src={
+                    h.poster
+                      ? withBasePath(
+                          h.poster.startsWith("/") ? h.poster : `/${h.poster}`,
+                        )
+                      : withBasePath(h.img)
+                  }
+                  alt={h.name}
+                  loading="lazy"
+                  whileHover={isDesktop ? { scale: 1.05 } : {}}
+                  transition={{ duration: 0.7 }}
+                  className="w-full h-full object-cover"
+                />
 
                 <div className="absolute top-4 right-4 bg-taiga-snow text-taiga-deep px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-widest shadow-lg z-10">
                   {h.type}

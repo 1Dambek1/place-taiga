@@ -17,6 +17,9 @@
 /.next/
 /out/
 /project/
+/.codex-pages-build/
+/.video-opt/
+/.video-final/
 
 # production
 /build
