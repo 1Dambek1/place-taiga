@@ -20,6 +20,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { BranchSVG, Logo, Section } from "./ui";
+import { withBasePath } from "@/lib/base-path";
 // ... импорт server actions (об этом ниже)
 
 const useIsDesktop = () => {
@@ -222,7 +223,7 @@ export const Hero = ({ onEnter }: any) => {
               ref={(el) => {
                 videoRefs.current[i] = el;
               }}
-              src={encodeURI(src)}
+              src={encodeURI(withBasePath(src))}
               muted
               playsInline
               preload="auto"
@@ -298,7 +299,7 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
       type: "Дизайнерский",
       desc: "Любимое место для гостей и жителей города",
       loc: "Иркутск",
-      img: "/videos/ТАЙГА.mp4",
+      img: "/videos/ТАЙГА.mp4",
       themeBg: "#151C19",
       poster: "forest-themed-hotel-green-nature-siberian-taiga.jpg",
       link: "https://taigahotel.ru/",
@@ -352,8 +353,8 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
               <div className="h-[280px] md:h-[450px] rounded-sm overflow-hidden mb-8 relative bg-white/50 shadow-2xl">
                 {isVideo(h.img) ? (
                   <motion.video
-                    src={encodeURI(h.img)}
-                    poster={h.poster || ""}
+                    src={encodeURI(withBasePath(h.img))}
+                    poster={h.poster ? withBasePath(h.poster) : ""}
                     autoPlay
                     muted
                     loop
@@ -366,7 +367,7 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
                   />
                 ) : (
                   <motion.img
-                    src={h.img}
+                    src={withBasePath(h.img)}
                     alt={h.name}
                     loading="lazy"
                     whileHover={isDesktop ? { scale: 1.05 } : {}}

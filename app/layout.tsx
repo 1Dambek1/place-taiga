@@ -1,12 +1,38 @@
 import { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import ClientRouteWrapper from "./client-route-wrapper";
 
-const manrope = Manrope({
-  subsets: ["cyrillic", "latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-manrope",
+const fmBolyar = localFont({
+  src: [
+    {
+      path: "../public/fonts/FMBolyarPro-100.ttf",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/FMBolyarPro-300.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/FMBolyarPro-500.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/FMBolyarPro-700.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/FMBolyarPro-900.ttf",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-fm-bolyar",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -39,7 +65,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={manrope.variable}>
+      <body className={fmBolyar.variable}>
         <ClientRouteWrapper>{children}</ClientRouteWrapper>
       </body>
     </html>
