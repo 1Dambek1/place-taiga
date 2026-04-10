@@ -255,7 +255,6 @@ export const Hero = ({ onEnter }: any) => {
 
 export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
   const isDesktop = useIsDesktop();
-  const [activeHotelVideo, setActiveHotelVideo] = useState<string | null>(null);
 
   const hotelsData = [
     {
@@ -351,24 +350,17 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
               className={`group block relative ${
                 i % 2 !== 0 ? "md:translate-y-32" : ""
               }`}
-              onMouseEnter={() => {
-                if (!isDesktop) return;
-                setHoverBg(h.themeBg);
-                setTheme(h.themeId);
-                setActiveHotelVideo(h.themeId);
-              }}
-              onMouseLeave={() => {
-                if (!isDesktop) return;
-                setHoverBg(null);
-                setTheme(null);
-                setActiveHotelVideo(null);
-              }}
+              onMouseEnter={() =>
+                isDesktop && (setHoverBg(h.themeBg), setTheme(h.themeId))
+              }
+              onMouseLeave={() =>
+                isDesktop && (setHoverBg(null), setTheme(null))
+              }
             >
               {/* Контейнер медиа */}
               <div className="h-[280px] md:h-[450px] rounded-sm overflow-hidden mb-8 relative bg-white/50 shadow-2xl">
-                {isVideo(h.img) && isDesktop && activeHotelVideo === h.themeId ? (
+                {isVideo(h.img) ? (
                   <motion.video
-                    key={`${h.themeId}-video`}
                     src={encodeURI(withBasePath(h.img))}
                     poster={
                       h.poster
@@ -381,14 +373,13 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
                     muted
                     loop
                     playsInline
-                    preload="metadata"
-                    whileHover={{ scale: 1.05 }}
+                    preload="auto"
+                    whileHover={isDesktop ? { scale: 1.05 } : {}}
                     transition={{ duration: 0.7 }}
                     className="w-full h-full object-cover pointer-events-none"
                   />
                 ) : (
                   <motion.img
-                    key={`${h.themeId}-poster`}
                     src={
                       h.poster
                         ? withBasePath(
