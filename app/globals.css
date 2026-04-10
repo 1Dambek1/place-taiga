@@ -17,35 +17,35 @@
 
 @font-face {
   font-family: "FM Bolyar Pro";
-  src: url("/fonts/FMBolyarPro-100.ttf") format("truetype");
+  src: url("/place-taiga/fonts/FMBolyarPro-100.ttf") format("truetype");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "FM Bolyar Pro";
-  src: url("/fonts/FMBolyarPro-300.ttf") format("truetype");
+  src: url("/place-taiga/fonts/FMBolyarPro-300.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "FM Bolyar Pro";
-  src: url("/fonts/FMBolyarPro-500.ttf") format("truetype");
+  src: url("/place-taiga/fonts/FMBolyarPro-500.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "FM Bolyar Pro";
-  src: url("/fonts/FMBolyarPro-700.ttf") format("truetype");
+  src: url("/place-taiga/fonts/FMBolyarPro-700.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "FM Bolyar Pro";
-  src: url("/fonts/FMBolyarPro-900.ttf") format("truetype");
+  src: url("/place-taiga/fonts/FMBolyarPro-900.ttf") format("truetype");
   font-weight: 900;
   font-style: normal;
   font-display: swap;

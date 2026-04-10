@@ -1,6 +1,7 @@
 "use client";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import React, { useEffect, useState } from "react";
+import { withBasePath } from "@/lib/base-path";
 
 // --- ЛОГОТИП (ОБНОВЛЕНО: Аккуратный текстовый логотип) ---
 export const Logo = () => (
@@ -11,7 +12,7 @@ export const Logo = () => (
        Убедитесь, что файл IMG_3054.PNG лежит в папке /public вашего проекта.
     */}
       <img
-        src="/IMG_3054.PNG"
+        src={withBasePath("/IMG_3054.PNG")}
         alt="Территория Тайги"
         className="h-18 w-auto object-contain"
         // h-10 соответствует вашим исходным 40px (40 / 4 = 10)
