@@ -5,8 +5,8 @@
   --color-taiga-accent: #e5e5e5;
 
   /* Теперь мы будем использовать наш FM Bolyar Pro как основной шрифт */
-  --font-sans: var(--font-fm-bolyar), sans-serif;
-  --font-serif: var(--font-fm-bolyar), sans-serif;
+  --font-sans: "FM Bolyar Pro", "Manrope", sans-serif;
+  --font-serif: "FM Bolyar Pro", "Manrope", sans-serif;
   --color-taiga-snow: #f2f5f3;
   /* Делаем зеленый чуть глубже для лучшего контраста на светлом фоне */
   --color-taiga-green: #1d2e27;
@@ -14,6 +14,44 @@
 }
 
 /* --- Глобальные стили --- */
+
+/* --- Подключение шрифтов (TTF) --- */
+
+@font-face {
+  font-family: "FM Bolyar Pro";
+  src: url("/fonts/FMBolyarPro-100.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "FM Bolyar Pro";
+  src: url("/fonts/FMBolyarPro-300.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "FM Bolyar Pro";
+  src: url("/fonts/FMBolyarPro-500.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "FM Bolyar Pro";
+  src: url("/fonts/FMBolyarPro-700.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "FM Bolyar Pro";
+  src: url("/fonts/FMBolyarPro-900.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 body {
   background-color: var(--color-taiga-snow);
