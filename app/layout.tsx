@@ -1,39 +1,6 @@
 import { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import ClientRouteWrapper from "./client-route-wrapper";
-
-const fmBolyar = localFont({
-  src: [
-    {
-      path: "../public/fonts/FMBolyarPro-100.ttf",
-      weight: "100",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/FMBolyarPro-300.ttf",
-      weight: "300",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/FMBolyarPro-500.ttf",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/FMBolyarPro-700.ttf",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/FMBolyarPro-900.ttf",
-      weight: "900",
-      style: "normal",
-    },
-  ],
-  variable: "--font-fm-bolyar",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://t-taigi.ru"), // Обязательно для картинок!
@@ -65,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={fmBolyar.variable}>
+      <body>
         <ClientRouteWrapper>{children}</ClientRouteWrapper>
       </body>
     </html>
