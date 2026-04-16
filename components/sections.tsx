@@ -149,7 +149,8 @@ export const Hero = ({ onEnter }: any) => {
   const scale = useTransform(scrollY, scrollRange, [1, 1.15]);
   const opacity = useTransform(scrollY, [0, 700, 1000], [1, 1, 0]);
 
-  const [index, setIndex] = useState(0);
+  const [videoIndex, setVideoIndex] = useState(0);
+  const [wordIndex, setWordIndex] = useState(0);
   const activeVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const words = ["ДОВЕРИЯ", "КОМФОРТА", "СЕРВИСА", "ПРИРОДЫ"];
@@ -168,25 +169,20 @@ export const Hero = ({ onEnter }: any) => {
     "/modern-bright-hotel-lobby-blue-white-green-colors.jpg",
     "/forest-themed-hotel-green-nature-siberian-taiga.jpg",
   ];
-  const currentWord = words[index % words.length];
-  const activeIndex = index % videos.length;
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-
-  // Исправленная типизация для массива рефов
+  const currentWord = words[wordIndex % words.length];
+  const activeIndex = videoIndex % videos.length;
 
   useEffect(() => {
     activeVideoRef.current?.play().catch(() => {});
-    videoRefs.current.forEach((video, i) => {
-      if (video) {
-        if (i === activeIndex) {
-          video.play().catch(() => {}); // Игнорируем ошибки автоплея
-        } else {
-          video.pause();
-          video.currentTime = 0;
-        }
-      }
-    });
   }, [activeIndex]);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setWordIndex((prev) => prev + 1);
+    }, 1800);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
 
   return (
     <Section
@@ -213,7 +209,7 @@ export const Hero = ({ onEnter }: any) => {
                   initial={{ y: "100%" }}
                   animate={{ y: "0%" }}
                   exit={{ y: "-100%" }}
-                  transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+                  transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
                   className="block"
                 >
                   {currentWord}
@@ -228,27 +224,6 @@ export const Hero = ({ onEnter }: any) => {
           style={{ scale, opacity }}
           className="absolute inset-0 w-full h-full z-10 bg-black"
         >
-          {false && videos.map((src, i) => (
-            <video
-              key={src}
-              // ИСПРАВЛЕНО: Добавлены фигурные скобки, чтобы функция возвращала void
-              ref={(el) => {
-                videoRefs.current[i] = el;
-              }}
-              src={encodeURI(withBasePath(src))}
-              poster={withBasePath(posters[i])}
-              muted
-              playsInline
-              preload={i === activeIndex ? "metadata" : "none"}
-              onEnded={() => {
-                if (i === activeIndex) setIndex((prev) => prev + 1);
-              }}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out pointer-events-none ${
-                i === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0"
-              }`}
-            />
-          ))}
-
           <motion.video
             key={videos[activeIndex]}
             ref={activeVideoRef}
@@ -261,7 +236,7 @@ export const Hero = ({ onEnter }: any) => {
             muted
             playsInline
             preload="metadata"
-            onEnded={() => setIndex((prev) => (prev + 1) % videos.length)}
+            onEnded={() => setVideoIndex((prev) => (prev + 1) % videos.length)}
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           />
 
@@ -414,7 +389,7 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
             Отели
           </h2>
           <p className="text-[11px] md:text-xs uppercase tracking-[0.3em] opacity-80 mt-4">
-            Территория гостиемпримства
+            Территория гостеприимства
           </p>
         </div>
 
@@ -980,8 +955,8 @@ export const Footer = ({ onEnter, setCursor }: any) => {
     { name: "Конференц-зал Азатай", href: "https://azatay.ru/konferenc-zal" },
   ];
   const socialLinks = [
-    { name: "Телеграмм Тайга", href: "https://t.me/taiga_irkutsk_hotel" },
-    { name: "Телеграмм Азатай", href: " https://t.me/azataybaikal" },
+    { name: "Телеграм Тайга", href: "https://t.me/taiga_irkutsk_hotel" },
+    { name: "Телеграм Азатай", href: "https://t.me/azataybaikal" },
   ];
 
   return (
