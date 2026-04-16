@@ -59,14 +59,14 @@ const ActiveThemeDecor = ({ theme }: { theme: string | null }) => {
             animate={{ opacity: 0.1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed left-0 top-0 h-screen w-32 bg-[#C8AA6E] z-0 pointer-events-none blur-3xl"
+            className="fixed left-0 top-0 h-screen w-32 bg-[#D6B87A] z-0 pointer-events-none blur-3xl"
           />
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 0.3 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed left-10 bottom-10 w-64 text-[#C8AA6E] z-0 pointer-events-none"
+            className="fixed left-10 bottom-10 w-64 text-[#D6B87A] z-0 pointer-events-none"
           >
             <OrnamentSVG />
           </motion.div>
@@ -79,13 +79,13 @@ const ActiveThemeDecor = ({ theme }: { theme: string | null }) => {
             animate={{ y: 0, opacity: 0.5 }}
             exit={{ y: 50, opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#C8AA6E]/20 to-transparent z-0 pointer-events-none"
+            className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#D6B87A]/25 to-transparent z-0 pointer-events-none"
           />
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.4 }}
             exit={{ opacity: 0 }}
-            className="fixed left-20 top-1/4 w-40 text-[#C8AA6E] z-0 pointer-events-none"
+            className="fixed left-20 top-1/4 w-40 text-[#D6B87A] z-0 pointer-events-none"
           >
             <OrnamentSVG />
           </motion.div>
@@ -96,6 +96,7 @@ const ActiveThemeDecor = ({ theme }: { theme: string | null }) => {
           <motion.div
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: -50, opacity: 1 }}
+
             exit={{ x: -100, opacity: 0 }}
             transition={{ duration: 0.4 }}
             className="fixed left-0 top-1/3 w-96 text-white/10 z-0 pointer-events-none"
@@ -137,7 +138,7 @@ const FloatingDecor = () => {
 };
 
 export default function Home() {
-  const [sectionBgColor, setSectionBgColor] = useState("#F2F5F3");
+  const [sectionBgColor, setSectionBgColor] = useState("#F6F7F2");
   const [hoverBgColor, setHoverBgColor] = useState<string | null>(null);
   const [activeTheme, setActiveTheme] = useState<string | null>(null);
 
@@ -161,8 +162,8 @@ export default function Home() {
   };
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest < 100 && sectionBgColor !== "#F2F5F3") {
-      setSectionBgColor("#F2F5F3");
+    if (latest < 100 && sectionBgColor !== "#F6F7F2") {
+      setSectionBgColor("#F6F7F2");
       setHoverBgColor(null);
     }
   });
@@ -209,33 +210,33 @@ export default function Home() {
         <Cursor active={cursorActive} text={cursorText} />
         <Header setCursor={setCursor} scrollTo={scrollTo} />
 
-        <Hero onEnter={() => handleSetSectionBg("#F2F5F3")} />
+        <Hero onEnter={() => handleSetSectionBg("#F6F7F2")} />
 
         <Hotels
-          onEnter={() => handleSetSectionBg("#151C19")}
+          onEnter={() => handleSetSectionBg("#1D2A24")}
           setCursor={setCursor}
           setHoverBg={setHoverBgColor}
           setTheme={setActiveTheme}
         />
 
         <Restaurants
-          onEnter={() => handleSetSectionBg("#D6C6B0")}
+          onEnter={() => handleSetSectionBg("#DECDB8")}
           setCursor={setCursor}
         />
 
         {/* ПЕРЕМЕЩЕНО: Events после Restaurants, цвет фона светлый для контраста */}
         <Events
-          onEnter={() => handleSetSectionBg("#F2F5F3")}
+          onEnter={() => handleSetSectionBg("#F6F7F2")}
           setCursor={setCursor}
         />
 
         <Career
-          onEnter={() => handleSetSectionBg("#D6C6B0")}
+          onEnter={() => handleSetSectionBg("#DECDB8")}
           setCursor={setCursor}
         />
 
         <News
-          onEnter={() => handleSetSectionBg("#F2F5F3")}
+          onEnter={() => handleSetSectionBg("#F6F7F2")}
           setCursor={setCursor}
         />
 

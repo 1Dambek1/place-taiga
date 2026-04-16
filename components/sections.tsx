@@ -21,6 +21,9 @@ import {
 } from "lucide-react";
 import { BranchSVG, Logo, Section } from "./ui";
 import { withBasePath } from "@/lib/base-path";
+
+const toPublicPath = (path: string) =>
+  withBasePath(path.startsWith("/") ? path : `/${path}`);
 // ... импорт server actions (об этом ниже)
 
 const useIsDesktop = () => {
@@ -108,7 +111,7 @@ export const Header = ({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween" }}
-            className="fixed inset-0 bg-[#151C19] z-100 flex flex-col items-center justify-center text-[#F2F5F3]"
+            className="fixed inset-0 bg-[#1D2A24] z-100 flex flex-col items-center justify-center text-[#F6F7F2]"
           >
             <button
               className="absolute top-6 right-6"
@@ -147,6 +150,7 @@ export const Hero = ({ onEnter }: any) => {
   const opacity = useTransform(scrollY, [0, 700, 1000], [1, 1, 0]);
 
   const [index, setIndex] = useState(0);
+  const activeVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const words = ["ДОВЕРИЯ", "КОМФОРТА", "СЕРВИСА", "ПРИРОДЫ"];
   const videos = [
@@ -166,11 +170,12 @@ export const Hero = ({ onEnter }: any) => {
   ];
   const currentWord = words[index % words.length];
   const activeIndex = index % videos.length;
-
-  // Исправленная типизация для массива рефов
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
+  // Исправленная типизация для массива рефов
+
   useEffect(() => {
+    activeVideoRef.current?.play().catch(() => {});
     videoRefs.current.forEach((video, i) => {
       if (video) {
         if (i === activeIndex) {
@@ -223,7 +228,7 @@ export const Hero = ({ onEnter }: any) => {
           style={{ scale, opacity }}
           className="absolute inset-0 w-full h-full z-10 bg-black"
         >
-          {videos.map((src, i) => (
+          {false && videos.map((src, i) => (
             <video
               key={src}
               // ИСПРАВЛЕНО: Добавлены фигурные скобки, чтобы функция возвращала void
@@ -244,7 +249,23 @@ export const Hero = ({ onEnter }: any) => {
             />
           ))}
 
-          <div className="absolute inset-0 bg-black/40 z-20 pointer-events-none" />
+          <motion.video
+            key={videos[activeIndex]}
+            ref={activeVideoRef}
+            initial={{ opacity: 0.35 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            src={encodeURI(toPublicPath(videos[activeIndex]))}
+            poster={toPublicPath(posters[activeIndex])}
+            autoPlay
+            muted
+            playsInline
+            preload="metadata"
+            onEnded={() => setIndex((prev) => (prev + 1) % videos.length)}
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          />
+
+          <div className="absolute inset-0 bg-black/30 z-20 pointer-events-none" />
         </motion.div>
       </div>
     </Section>
@@ -252,6 +273,70 @@ export const Hero = ({ onEnter }: any) => {
 };
 // ... Остальные компоненты (Hotels, Restaurants и т.д.) остаются без изменений ...
 // ... Ниже только измененный компонент Career для обработки формы ...
+
+const HotelMedia = ({
+  src,
+  poster,
+  alt,
+  isDesktop,
+}: {
+  src: string;
+  poster?: string;
+  alt: string;
+  isDesktop: boolean;
+}) => {
+  const mediaRef = useRef<HTMLDivElement | null>(null);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const posterSrc = poster ? toPublicPath(poster) : toPublicPath(src);
+
+  useEffect(() => {
+    const node = mediaRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "260px 0px" },
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={mediaRef} className="w-full h-full">
+      {shouldLoadVideo ? (
+        <motion.video
+          src={encodeURI(toPublicPath(src))}
+          poster={posterSrc}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          whileHover={isDesktop ? { scale: 1.05 } : {}}
+          transition={{ duration: 0.7 }}
+          className="w-full h-full object-cover pointer-events-none"
+        />
+      ) : (
+        <motion.img
+          src={posterSrc}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          whileHover={isDesktop ? { scale: 1.05 } : {}}
+          transition={{ duration: 0.7 }}
+          className="w-full h-full object-cover"
+        />
+      )}
+    </div>
+  );
+};
 
 export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
   const isDesktop = useIsDesktop();
@@ -264,7 +349,7 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
       desc: "Загородный отдых на берегу Байкала",
       loc: "п. Большое Голоустное",
       img: "/videos/АЗАТАЙ.mp4",
-      themeBg: "#3A2226",
+      themeBg: "#513036",
       poster: "japanese-zen-hotel-room-white-sakura-minimalist-ba.jpg",
       link: "https://www.azatay.ru/",
     },
@@ -275,7 +360,7 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
       desc: "Отель в доме купца Н.В. Яковлева",
       loc: "Центр города",
       img: "/videos/ЯКОВЛЕВ.mp4",
-      themeBg: "#2F2520",
+      themeBg: "#43352f",
       poster: "historical-wooden-noble-hotel-dark-brown-interior.jpg",
       link: "https://yakovlevhotel.ru/",
     },
@@ -286,7 +371,7 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
       desc: "Стиль и комфорт в самом центре",
       loc: "Центр города",
       img: "/videos/ВИКТОРИЯ.mp4",
-      themeBg: "#3D3628",
+      themeBg: "#554b39",
       poster: "/elegant-comfortable-hotel-in-historic-city-center.jpg",
       link: "https://victoryhotel.ru/",
     },
@@ -297,7 +382,7 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
       desc: "Уютный уголок недалеко от центра",
       loc: "Тихий центр",
       img: "/videos/АТЛАС.mp4",
-      themeBg: "#1D2530",
+      themeBg: "#2a3949",
       poster: "modern-bright-hotel-lobby-blue-white-green-colors.jpg",
       link: "https://atlas-irk.ru/",
     },
@@ -308,7 +393,7 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
       desc: "Любимое место для гостей и жителей города",
       loc: "Иркутск",
       img: "/videos/ТАЙГА.mp4",
-      themeBg: "#151C19",
+      themeBg: "#22332c",
       poster: "forest-themed-hotel-green-nature-siberian-taiga.jpg",
       link: "https://taigahotel.ru/",
     },
@@ -358,37 +443,22 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
               }
             >
               {/* Контейнер медиа */}
-              <div className="h-[280px] md:h-[450px] rounded-sm overflow-hidden mb-8 relative bg-white/50 shadow-2xl">
+              <div className="h-[280px] md:h-[450px] rounded-sm overflow-hidden mb-8 relative bg-white/65 shadow-2xl">
                 {isVideo(h.img) ? (
-                  <motion.video
-                    src={encodeURI(withBasePath(h.img))}
-                    poster={
-                      h.poster
-                        ? withBasePath(
-                            h.poster.startsWith("/") ? h.poster : `/${h.poster}`,
-                          )
-                        : undefined
-                    }
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    whileHover={isDesktop ? { scale: 1.05 } : {}}
-                    transition={{ duration: 0.7 }}
-                    className="w-full h-full object-cover pointer-events-none"
+                  <HotelMedia
+                    src={h.img}
+                    poster={h.poster}
+                    alt={h.name}
+                    isDesktop={isDesktop}
                   />
                 ) : (
                   <motion.img
                     src={
-                      h.poster
-                        ? withBasePath(
-                            h.poster.startsWith("/") ? h.poster : `/${h.poster}`,
-                          )
-                        : withBasePath(h.img)
+                      h.poster ? toPublicPath(h.poster) : toPublicPath(h.img)
                     }
                     alt={h.name}
                     loading="lazy"
+                    decoding="async"
                     whileHover={isDesktop ? { scale: 1.05 } : {}}
                     transition={{ duration: 0.7 }}
                     className="w-full h-full object-cover"
@@ -428,7 +498,7 @@ export const Restaurants = ({ onEnter, setCursor }: any) => {
       name: "АЗАТАЙ",
       imgRest: "DSC03659.jpg",
       imgFood: "food1.png", // замените на реальный путь
-      link: "https://azatai-rest.ru",
+      link: "https://azatay.ru/restaurant",
     },
     {
       name: "ТАЙГА",
@@ -475,17 +545,21 @@ export const Restaurants = ({ onEnter, setCursor }: any) => {
               <div className="relative w-full md:w-[55%] aspect-[16/9] overflow-hidden rounded-2xl shadow-xl">
                 {/* Основное фото (Ресторан) */}
                 <motion.img
-                  src={item.imgRest}
+                  src={toPublicPath(item.imgRest)}
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                   alt={item.name}
+                  loading="lazy"
+                  decoding="async"
                 />
 
                 {/* Второе фото (Блюдо) - появляется сбоку при наведении */}
                 <motion.div className="absolute top-4 right-4 w-1/3 aspect-square rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl hidden md:block opacity-0 translate-x-10 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 delay-100">
                   <img
-                    src={item.imgFood || item.imgRest}
+                    src={toPublicPath(item.imgFood || item.imgRest)}
                     className="w-full h-full object-cover"
                     alt="Dish"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </motion.div>
 
@@ -553,7 +627,7 @@ export const Events = ({ onEnter, setCursor }: any) => {
               name: "Конференц-зал Тайга",
               cap: "до 100 персон",
               img: "DSC06897.jpg",
-              link: "https://azatay.ru/konferenc-zal",
+              link: "https://taigahotel.ru",
               desc: "Уютный конференц-зал с современным дизайном",
             },
           ].map((h, i) => (
@@ -572,9 +646,10 @@ export const Events = ({ onEnter, setCursor }: any) => {
             >
               <div className="h-[220px] md:h-[400px] rounded-xl overflow-hidden mb-4 md:mb-6 relative shadow-sm group-hover:shadow-2xl transition-shadow duration-500">
                 <img
-                  src={h.img}
+                  src={toPublicPath(h.img)}
                   className="w-full h-full object-cover md:group-hover:scale-105 transition-transform duration-1000 md:group-hover:grayscale-0"
                   loading="lazy"
+                  decoding="async"
                 />
 
                 {/* Вместимость и стрелка */}
@@ -656,11 +731,13 @@ export const Career = ({ onEnter, setCursor }: any) => {
           {/* Левая часть: Фото */}
           <div className="md:w-1/2 h-[300px] md:h-auto relative">
             <img
-              src="./work.png"
+              src={toPublicPath("/work.png")}
               className="absolute inset-0 w-full h-full object-cover"
               alt="Career at Taiga"
+              loading="lazy"
+              decoding="async"
             />
-            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 bg-black/10" />
             <div className="absolute bottom-8 left-8 text-white">
               <p className="text-[10px] uppercase tracking-[0.3em] opacity-80 mb-2">
                 Работа у нас
@@ -731,7 +808,7 @@ export const Career = ({ onEnter, setCursor }: any) => {
                     disabled={status === "loading"}
                     onMouseEnter={() => setCursor(true, "SEND")}
                     onMouseLeave={() => setCursor(false, "")}
-                    className="w-full bg-[#D6C6B0] hover:bg-[#c4b59f] text-white h-16 rounded-xl font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-3 shadow-lg disabled:grayscale disabled:cursor-not-allowed"
+                    className="w-full bg-[#DECDB8] hover:bg-[#d3c0aa] text-white h-16 rounded-xl font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-3 shadow-lg disabled:grayscale disabled:cursor-not-allowed"
                   >
                     {status === "loading" ? "Отправка..." : "Отправить"}
                     {status !== "loading" && <ArrowRight size={18} />}
@@ -759,7 +836,7 @@ export const News = ({ onEnter, setCursor, isDesktop }: any) => {
       img: "forest-themed-hotel-green-nature-siberian-taiga.jpg",
       title: "События отеля Тайга",
       desc: "Уникальное путешествие по Сибири в сопровождении авторских мероприятий.",
-      href: "https://azatay.ru/afisha#/",
+      href: "https://taigahotel.ru/promotions",
     },
   ];
   const [berryList, setBerryList] = useState<any[]>([]);
@@ -857,9 +934,11 @@ export const News = ({ onEnter, setCursor, isDesktop }: any) => {
                 {/* Картинка: крупная и четкая */}
                 <div className="relative aspect-[4/5] overflow-hidden rounded-2xl mb-8 shadow-2xl border border-taiga-deep/5">
                   <img
-                    src={item.img}
+                    src={toPublicPath(item.img)}
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-taiga-deep/10 group-hover:bg-transparent transition-colors duration-700" />
                 </div>

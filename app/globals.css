@@ -1,19 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-taiga-gold: #c8aa6e;
-  --color-taiga-accent: #e5e5e5;
+  --color-taiga-gold: #d6b87a;
+  --color-taiga-accent: #efe8dc;
 
   /* Теперь мы будем использовать наш FM Bolyar Pro как основной шрифт */
   --font-sans: "FM Bolyar Pro", "Manrope", sans-serif;
   --font-serif: "FM Bolyar Pro", "Manrope", sans-serif;
-  --color-taiga-snow: #f2f5f3;
+  --color-taiga-snow: #f6f7f2;
   /* Делаем зеленый чуть глубже для лучшего контраста на светлом фоне */
-  --color-taiga-green: #1d2e27;
-  --color-taiga-deep: #0a0f0d;
+  --color-taiga-green: #274036;
+  --color-taiga-deep: #13201a;
 }
-
-/* --- Глобальные стили --- */
 
 /* --- Подключение шрифтов (TTF) --- */
 
@@ -52,6 +50,8 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* --- Глобальные стили --- */
 
 body {
   background-color: var(--color-taiga-snow);

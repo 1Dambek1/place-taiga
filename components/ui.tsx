@@ -196,9 +196,9 @@ export const Preloader = ({ onComplete }: { onComplete: () => void }) => {
     <motion.div
       initial={{ y: 0 }}
       animate={{ y: "-100%" }}
-      transition={{ duration: 1.0, ease: [0.76, 0, 0.24, 1], delay: 2.5 }}
+      transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1], delay: 1.6 }}
       onAnimationComplete={onComplete}
-      className="fixed inset-0 z-[99999] bg-[#151C19] flex items-center justify-center text-[#F2F5F3]"
+      className="fixed inset-0 z-[99999] bg-[#1D2A24] flex items-center justify-center text-[#F6F7F2]"
     >
       <div className="flex flex-col items-center px-4">
         <motion.svg
