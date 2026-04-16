@@ -314,11 +314,60 @@ const HotelMedia = ({
 };
 
 const HotelsDecor = () => {
+  const berryAccents = [
+    {
+      className: "absolute right-[8%] top-18 w-24 md:w-36 opacity-85",
+      duration: 7,
+      delay: 0,
+      y: [0, -10, 0],
+      rotate: [-5, 2, -5],
+    },
+    {
+      className: "absolute left-[7%] bottom-28 w-20 md:w-28 opacity-70",
+      duration: 8,
+      delay: 1.2,
+      y: [0, 12, 0],
+      rotate: [6, -2, 6],
+    },
+    {
+      className: "absolute left-[52%] top-24 hidden md:block w-16 opacity-55",
+      duration: 6.5,
+      delay: 0.7,
+      y: [0, -8, 0],
+      rotate: [-4, 4, -4],
+    },
+    {
+      className: "absolute right-[26%] bottom-16 hidden md:block w-12 opacity-40",
+      duration: 6,
+      delay: 1.8,
+      y: [0, -6, 0],
+      rotate: [-3, 3, -3],
+    },
+    {
+      className: "absolute left-[28%] top-[44%] hidden lg:block w-10 opacity-30",
+      duration: 5.5,
+      delay: 0.5,
+      y: [0, 7, 0],
+      rotate: [4, -2, 4],
+    },
+  ];
+
+  const sparkles = [
+    { className: "absolute left-[14%] top-24", size: "h-5 w-5", delay: 0.2, duration: 4.4 },
+    { className: "absolute left-[38%] top-[20%] hidden md:block", size: "h-4 w-4", delay: 1.1, duration: 5.2 },
+    { className: "absolute right-[18%] top-[34%]", size: "h-6 w-6", delay: 0.7, duration: 4.8 },
+    { className: "absolute left-[22%] bottom-[18%]", size: "h-4 w-4", delay: 1.6, duration: 5.6 },
+    { className: "absolute right-[34%] bottom-[12%] hidden md:block", size: "h-5 w-5", delay: 0.4, duration: 4.9 },
+    { className: "absolute right-[8%] bottom-[32%] hidden lg:block", size: "h-3.5 w-3.5", delay: 1.9, duration: 4.2 },
+  ];
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
       <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-taiga-gold/10 blur-3xl" />
       <div className="absolute right-[-8%] top-10 h-96 w-96 rounded-full bg-[#8e2c33]/15 blur-3xl" />
       <div className="absolute left-[12%] bottom-16 h-56 w-56 rounded-full bg-white/6 blur-3xl" />
+      <div className="absolute left-[44%] top-[18%] h-44 w-44 rounded-full bg-[#f0d8a6]/6 blur-3xl" />
+      <div className="absolute right-[24%] bottom-[10%] h-52 w-52 rounded-full bg-[#7d2731]/10 blur-3xl" />
 
       <motion.div
         initial={{ opacity: 0, x: -40, y: 20 }}
@@ -340,29 +389,43 @@ const HotelsDecor = () => {
         <BranchSVG className="drop-shadow-2xl" />
       </motion.div>
 
-      <motion.div
-        animate={{ y: [0, -10, 0], rotate: [-5, 2, -5] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute right-[8%] top-18 w-24 md:w-36 opacity-85"
-      >
-        <BerrySVG className="drop-shadow-[0_18px_36px_rgba(0,0,0,0.2)]" />
-      </motion.div>
+      {berryAccents.map((item) => (
+        <motion.div
+          key={item.className}
+          animate={{ y: item.y, rotate: item.rotate }}
+          transition={{
+            duration: item.duration,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: item.delay,
+          }}
+          className={item.className}
+        >
+          <BerrySVG className="drop-shadow-[0_18px_36px_rgba(0,0,0,0.2)]" />
+        </motion.div>
+      ))}
 
-      <motion.div
-        animate={{ y: [0, 12, 0], rotate: [6, -2, 6] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-        className="absolute left-[7%] bottom-28 w-20 md:w-28 opacity-70"
-      >
-        <BerrySVG className="drop-shadow-[0_18px_36px_rgba(0,0,0,0.2)]" />
-      </motion.div>
-
-      <motion.div
-        animate={{ y: [0, -8, 0], rotate: [-4, 4, -4] }}
-        transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
-        className="absolute left-[52%] top-24 hidden md:block w-16 opacity-55"
-      >
-        <BerrySVG />
-      </motion.div>
+      {sparkles.map((item) => (
+        <motion.div
+          key={item.className}
+          animate={{
+            opacity: [0.18, 0.95, 0.22],
+            scale: [0.8, 1.12, 0.84],
+            rotate: [0, 45, 90],
+          }}
+          transition={{
+            duration: item.duration,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: item.delay,
+          }}
+          className={`${item.className} ${item.size} relative`}
+        >
+          <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/90 to-transparent" />
+          <div className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-[#f5dfac] to-transparent" />
+          <div className="absolute inset-[34%] rounded-full bg-white/90 blur-[1.5px]" />
+        </motion.div>
+      ))}
     </div>
   );
 };
