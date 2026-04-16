@@ -19,7 +19,7 @@ import {
   Check,
   ArrowRight,
 } from "lucide-react";
-import { BranchSVG, Logo, Section } from "./ui";
+import { BerrySVG, BranchSVG, Logo, Section } from "./ui";
 import { withBasePath } from "@/lib/base-path";
 
 const toPublicPath = (path: string) =>
@@ -313,6 +313,60 @@ const HotelMedia = ({
   );
 };
 
+const HotelsDecor = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-taiga-gold/10 blur-3xl" />
+      <div className="absolute right-[-8%] top-10 h-96 w-96 rounded-full bg-[#8e2c33]/15 blur-3xl" />
+      <div className="absolute left-[12%] bottom-16 h-56 w-56 rounded-full bg-white/6 blur-3xl" />
+
+      <motion.div
+        initial={{ opacity: 0, x: -40, y: 20 }}
+        whileInView={{ opacity: 0.22, x: 0, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="absolute -left-8 top-28 w-64 md:w-[26rem] rotate-[9deg]"
+      >
+        <BranchSVG className="drop-shadow-2xl" />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: 40, y: -20 }}
+        whileInView={{ opacity: 0.18, x: 0, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 1.2, delay: 0.15, ease: "easeOut" }}
+        className="absolute right-[-2rem] bottom-24 w-72 md:w-[30rem] scale-x-[-1] rotate-[-8deg]"
+      >
+        <BranchSVG className="drop-shadow-2xl" />
+      </motion.div>
+
+      <motion.div
+        animate={{ y: [0, -10, 0], rotate: [-5, 2, -5] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute right-[8%] top-18 w-24 md:w-36 opacity-85"
+      >
+        <BerrySVG className="drop-shadow-[0_18px_36px_rgba(0,0,0,0.2)]" />
+      </motion.div>
+
+      <motion.div
+        animate={{ y: [0, 12, 0], rotate: [6, -2, 6] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+        className="absolute left-[7%] bottom-28 w-20 md:w-28 opacity-70"
+      >
+        <BerrySVG className="drop-shadow-[0_18px_36px_rgba(0,0,0,0.2)]" />
+      </motion.div>
+
+      <motion.div
+        animate={{ y: [0, -8, 0], rotate: [-4, 4, -4] }}
+        transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
+        className="absolute left-[52%] top-24 hidden md:block w-16 opacity-55"
+      >
+        <BerrySVG />
+      </motion.div>
+    </div>
+  );
+};
+
 export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
   const isDesktop = useIsDesktop();
 
@@ -380,8 +434,9 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
     <Section
       id="hotels"
       onEnter={onEnter}
-      className="py-16 md:py-32 text-taiga-snow relative z-10"
+      className="py-16 md:py-32 text-taiga-snow relative z-10 overflow-hidden"
     >
+      <HotelsDecor />
       <div className="container mx-auto px-6">
         {/* Шапка раздела: Центрированный заголовок */}
         <div className="flex flex-col items-center mb-16 md:mb-24 border-b border-taiga-snow pb-12 text-center">
