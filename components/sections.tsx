@@ -19,7 +19,14 @@ import {
   Check,
   ArrowRight,
 } from "lucide-react";
-import { BerrySVG, BranchSVG, Logo, Section } from "./ui";
+import {
+  BerrySVG,
+  BranchSVG,
+  GeoShapeSVG,
+  Logo,
+  OrnamentSVG,
+  Section,
+} from "./ui";
 import { withBasePath } from "@/lib/base-path";
 
 const toPublicPath = (path: string) =>
@@ -494,6 +501,362 @@ const HotelsDecor = () => {
   );
 };
 
+const RestaurantsDecor = () => {
+  const sparkles = [
+    {
+      className: "absolute left-[12%] top-18",
+      size: "h-4 w-4",
+      delay: 0.2,
+      duration: 4.8,
+    },
+    {
+      className: "absolute left-[42%] top-[20%] hidden md:block",
+      size: "h-3 w-3",
+      delay: 1.3,
+      duration: 5.5,
+    },
+    {
+      className: "absolute right-[18%] top-[24%]",
+      size: "h-5 w-5",
+      delay: 0.7,
+      duration: 4.6,
+    },
+    {
+      className: "absolute right-[28%] bottom-[16%] hidden md:block",
+      size: "h-4 w-4",
+      delay: 1.7,
+      duration: 5.2,
+    },
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <motion.div
+        animate={{ x: [0, 14, 0], y: [0, -10, 0], opacity: [0.28, 0.4, 0.28] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -left-10 top-14 h-52 w-52 rounded-full bg-taiga-gold/12 blur-3xl"
+      />
+      <motion.div
+        animate={{ x: [0, -12, 0], y: [0, 14, 0], opacity: [0.18, 0.3, 0.18] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute right-[4%] top-[20%] h-64 w-64 rounded-full bg-[#c78a58]/12 blur-3xl"
+      />
+      <motion.div
+        animate={{ x: [0, 8, 0], y: [0, 10, 0], opacity: [0.14, 0.22, 0.14] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute left-[28%] bottom-[4%] h-40 w-40 rounded-full bg-white/10 blur-3xl"
+      />
+
+      <svg
+        viewBox="0 0 1440 880"
+        className="absolute inset-0 h-full w-full opacity-45"
+        preserveAspectRatio="none"
+      >
+        <motion.path
+          d="M-40 210 C 220 170, 430 220, 640 175 S 1050 70, 1480 190"
+          fill="none"
+          stroke="rgba(214,184,122,0.24)"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeDasharray="2 16"
+          initial={{ pathLength: 0.88, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+        />
+        <motion.path
+          d="M40 540 C 280 470, 500 560, 790 510 S 1190 430, 1500 560"
+          fill="none"
+          stroke="rgba(39,64,54,0.12)"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          initial={{ pathLength: 0.92, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 1.7, delay: 0.1, ease: "easeOut" }}
+        />
+        <circle
+          cx="1180"
+          cy="210"
+          r="108"
+          fill="none"
+          stroke="rgba(214,184,122,0.18)"
+          strokeWidth="1.2"
+        />
+        <circle
+          cx="1180"
+          cy="210"
+          r="74"
+          fill="none"
+          stroke="rgba(255,255,255,0.12)"
+          strokeWidth="1"
+          strokeDasharray="3 14"
+        />
+      </svg>
+
+      <motion.div
+        initial={{ opacity: 0, rotate: -14 }}
+        whileInView={{ opacity: 0.14, rotate: -6 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 1.1, ease: "easeOut" }}
+        className="absolute right-[8%] top-18 w-42 text-[#d6b87a]"
+      >
+        <OrnamentSVG />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: -24, y: 18 }}
+        whileInView={{ opacity: 0.1, x: 0, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="absolute left-[8%] bottom-8 w-56 rotate-[12deg]"
+      >
+        <BranchSVG />
+      </motion.div>
+
+      {sparkles.map((item) => (
+        <motion.div
+          key={item.className}
+          animate={{
+            opacity: [0.12, 0.76, 0.16],
+            scale: [0.84, 1.08, 0.88],
+            rotate: [0, 45, 90],
+          }}
+          transition={{
+            duration: item.duration,
+            repeat: Infinity,
+            delay: item.delay,
+            ease: "easeInOut",
+          }}
+          className={`${item.className} ${item.size} relative`}
+        >
+          <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/80 to-transparent" />
+          <div className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-[#d6b87a] to-transparent" />
+          <div className="absolute inset-[34%] rounded-full bg-white/80 blur-[1px]" />
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+const EventsDecor = () => {
+  const sparkles = [
+    {
+      className: "absolute left-[14%] top-18",
+      size: "h-4 w-4",
+      delay: 0.3,
+      duration: 4.9,
+    },
+    {
+      className: "absolute right-[12%] top-[20%]",
+      size: "h-5 w-5",
+      delay: 1.2,
+      duration: 5.4,
+    },
+    {
+      className: "absolute left-[48%] bottom-[18%] hidden md:block",
+      size: "h-3.5 w-3.5",
+      delay: 1.8,
+      duration: 4.6,
+    },
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div className="absolute left-[-4%] top-12 h-60 w-60 rounded-full bg-taiga-gold/10 blur-3xl" />
+      <div className="absolute right-[0%] top-[24%] h-72 w-72 rounded-full bg-[#274036]/8 blur-3xl" />
+
+      <motion.div
+        animate={{ opacity: [0.08, 0.16, 0.08], x: [0, 10, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute left-[7%] bottom-8 w-52 text-[#274036]"
+      >
+        <GeoShapeSVG />
+      </motion.div>
+
+      <motion.div
+        animate={{ opacity: [0.08, 0.14, 0.08], y: [0, -10, 0] }}
+        transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute right-[10%] top-18 w-36 text-[#d6b87a]"
+      >
+        <OrnamentSVG />
+      </motion.div>
+
+      <div className="absolute left-[22%] top-[-8%] h-[24rem] w-20 rotate-[-18deg] bg-gradient-to-b from-[#d6b87a]/16 via-white/6 to-transparent blur-3xl" />
+      <div className="absolute right-[26%] top-[-6%] h-[22rem] w-18 rotate-[16deg] bg-gradient-to-b from-white/14 via-[#d6b87a]/8 to-transparent blur-3xl" />
+
+      <svg
+        viewBox="0 0 1440 900"
+        className="absolute inset-0 h-full w-full opacity-40"
+        preserveAspectRatio="none"
+      >
+        <rect
+          x="112"
+          y="130"
+          width="260"
+          height="188"
+          rx="26"
+          fill="none"
+          stroke="rgba(39,64,54,0.12)"
+          strokeWidth="1.2"
+        />
+        <rect
+          x="1060"
+          y="164"
+          width="214"
+          height="146"
+          rx="24"
+          fill="none"
+          stroke="rgba(214,184,122,0.18)"
+          strokeWidth="1.1"
+          strokeDasharray="4 12"
+        />
+        <motion.path
+          d="M 70 470 C 300 430, 520 460, 760 430 S 1130 340, 1380 400"
+          fill="none"
+          stroke="rgba(214,184,122,0.2)"
+          strokeWidth="1.4"
+          initial={{ pathLength: 0.88, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+        />
+        <motion.path
+          d="M 220 690 L 580 520 L 940 670 L 1260 540"
+          fill="none"
+          stroke="rgba(39,64,54,0.12)"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          initial={{ pathLength: 0.9, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 1.7, delay: 0.1, ease: "easeOut" }}
+        />
+      </svg>
+
+      {sparkles.map((item) => (
+        <motion.div
+          key={item.className}
+          animate={{
+            opacity: [0.1, 0.8, 0.14],
+            scale: [0.82, 1.06, 0.88],
+            rotate: [0, 45, 90],
+          }}
+          transition={{
+            duration: item.duration,
+            repeat: Infinity,
+            delay: item.delay,
+            ease: "easeInOut",
+          }}
+          className={`${item.className} ${item.size} relative`}
+        >
+          <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/78 to-transparent" />
+          <div className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-[#d6b87a] to-transparent" />
+          <div className="absolute inset-[34%] rounded-full bg-white/75 blur-[1px]" />
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+const CareerDecor = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <motion.div
+        animate={{ opacity: [0.08, 0.16, 0.08], x: [0, 10, 0], y: [0, -8, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -left-6 top-16 w-64 rotate-[10deg]"
+      >
+        <BranchSVG />
+      </motion.div>
+
+      <motion.div
+        animate={{ opacity: [0.07, 0.13, 0.07], x: [0, -10, 0], y: [0, 8, 0] }}
+        transition={{ duration: 11.5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute right-[-2rem] bottom-12 w-72 scale-x-[-1] rotate-[-8deg]"
+      >
+        <BranchSVG />
+      </motion.div>
+
+      <div className="absolute left-[14%] top-[26%] h-44 w-44 rounded-full bg-[#decdb8]/18 blur-3xl" />
+      <div className="absolute right-[10%] top-[14%] h-56 w-56 rounded-full bg-[#274036]/7 blur-3xl" />
+      <div className="absolute right-[24%] bottom-[8%] h-40 w-40 rounded-full bg-white/10 blur-3xl" />
+
+      <svg
+        viewBox="0 0 1440 860"
+        className="absolute inset-0 h-full w-full opacity-35"
+        preserveAspectRatio="none"
+      >
+        <motion.path
+          d="M 40 670 C 260 590, 470 620, 690 530 S 1110 380, 1390 450"
+          fill="none"
+          stroke="rgba(214,184,122,0.2)"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          initial={{ pathLength: 0.86, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 1.6, ease: "easeOut" }}
+        />
+        <motion.path
+          d="M 180 720 C 380 660, 550 630, 760 560 S 1120 470, 1350 540"
+          fill="none"
+          stroke="rgba(39,64,54,0.12)"
+          strokeWidth="1.2"
+          strokeDasharray="2 14"
+          initial={{ pathLength: 0.9, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 1.8, delay: 0.1, ease: "easeOut" }}
+        />
+      </svg>
+
+      <motion.div
+        initial={{ opacity: 0, rotate: 10 }}
+        whileInView={{ opacity: 0.12, rotate: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 1.1, ease: "easeOut" }}
+        className="absolute right-[12%] top-20 w-34 text-[#d6b87a]"
+      >
+        <OrnamentSVG />
+      </motion.div>
+    </div>
+  );
+};
+
+const FooterDecor = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <div className="absolute left-[8%] top-8 h-28 w-28 rounded-full bg-taiga-gold/8 blur-3xl" />
+      <div className="absolute right-[12%] bottom-10 h-24 w-24 rounded-full bg-[#274036]/6 blur-3xl" />
+
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        whileInView={{ opacity: 0.08, x: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="absolute right-[8%] top-12 w-28 text-[#274036]"
+      >
+        <OrnamentSVG />
+      </motion.div>
+
+      <svg
+        viewBox="0 0 1440 380"
+        className="absolute inset-0 h-full w-full opacity-30"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M 80 110 C 330 80, 610 140, 840 110 S 1200 70, 1380 110"
+          fill="none"
+          stroke="rgba(214,184,122,0.18)"
+          strokeWidth="1.2"
+          strokeDasharray="2 14"
+        />
+      </svg>
+    </div>
+  );
+};
+
 export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
   const isDesktop = useIsDesktop();
 
@@ -564,7 +927,7 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
       className="py-16 md:py-32 text-taiga-snow relative z-10 overflow-hidden"
     >
       <HotelsDecor />
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 relative z-10">
         {/* Шапка раздела: Центрированный заголовок */}
         <div className="flex flex-col items-center mb-16 md:mb-24 border-b border-taiga-snow pb-12 text-center">
           <h2 className="text-5xl md:text-8xl font-serif uppercase tracking-[0.1em]">
@@ -670,9 +1033,10 @@ export const Restaurants = ({ onEnter, setCursor }: any) => {
     <Section
       id="restaurants"
       onEnter={onEnter}
-      className="py-20 md:py-40 text-taiga-deep relative z-10"
+      className="py-20 md:py-40 text-taiga-deep relative z-10 overflow-hidden"
     >
-      <div className="container mx-auto px-6">
+      <RestaurantsDecor />
+      <div className="container mx-auto px-6 relative z-10">
         {/* Заголовок */}
         <div className="border-b border-taiga-deep/10 pb-8 mb-16 text-center md:text-left">
           <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] mb-4 opacity-80">
@@ -755,9 +1119,10 @@ export const Events = ({ onEnter, setCursor }: any) => {
     <Section
       id="events"
       onEnter={onEnter}
-      className="py-16 md:py-32 text-taiga-deep relative z-10"
+      className="py-16 md:py-32 text-taiga-deep relative z-10 overflow-hidden"
     >
-      <div className="container mx-auto px-6">
+      <EventsDecor />
+      <div className="container mx-auto px-6 relative z-10">
         {/* Центрированный заголовок раздела */}
         <div className="flex flex-col items-center mb-16 md:mb-24 border-b border-taiga-deep/10 pb-12 text-center">
           <h2 className="text-4xl md:text-7xl font-serif uppercase tracking-[0.1em]">
@@ -886,8 +1251,9 @@ export const Career = ({ onEnter, setCursor }: any) => {
   };
 
   return (
-    <Section onEnter={onEnter} className="py-20 md:py-32">
-      <div className="container mx-auto px-6">
+    <Section onEnter={onEnter} className="py-20 md:py-32 relative overflow-hidden">
+      <CareerDecor />
+      <div className="container mx-auto px-6 relative z-10">
         <div className="bg-white rounded-[32px] overflow-hidden flex flex-col md:flex-row shadow-2xl">
           {/* Левая часть: Фото */}
           <div className="md:w-1/2 h-[300px] md:h-auto relative">
@@ -1022,6 +1388,8 @@ export const News = ({ onEnter, setCursor, isDesktop }: any) => {
       className="py-24 md:py-40 text-taiga-deep overflow-hidden relative"
     >
       <div className="absolute left-0 top-0 w-full h-full pointer-events-none">
+        <div className="absolute left-[6%] top-[12%] h-40 w-40 rounded-full bg-taiga-gold/8 blur-3xl" />
+        <div className="absolute right-[4%] top-[18%] h-52 w-52 rounded-full bg-[#7d2731]/10 blur-3xl" />
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 0.18, x: 0 }}
@@ -1032,6 +1400,85 @@ export const News = ({ onEnter, setCursor, isDesktop }: any) => {
         </motion.div>
 
         {/* 3. Рендерим только если ягоды сгенерированы */}
+        <motion.div
+          initial={{ opacity: 0, rotate: 10 }}
+          whileInView={{ opacity: 0.1, rotate: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 1.1, ease: "easeOut" }}
+          className="absolute right-[10%] top-22 w-36 text-[#d6b87a]"
+        >
+          <OrnamentSVG />
+        </motion.div>
+
+        <svg
+          viewBox="0 0 1440 900"
+          className="absolute inset-0 h-full w-full opacity-35"
+          preserveAspectRatio="none"
+        >
+          <motion.path
+            d="M -10 240 C 240 200, 470 270, 730 220 S 1140 140, 1460 220"
+            fill="none"
+            stroke="rgba(214,184,122,0.18)"
+            strokeWidth="1.4"
+            strokeDasharray="2 14"
+            initial={{ pathLength: 0.86, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 1 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+          />
+          <motion.path
+            d="M 160 650 C 420 600, 680 620, 930 560 S 1250 470, 1460 520"
+            fill="none"
+            stroke="rgba(16,24,20,0.1)"
+            strokeWidth="1.2"
+            initial={{ pathLength: 0.88, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 1 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 1.7, delay: 0.1, ease: "easeOut" }}
+          />
+        </svg>
+
+        {[
+          {
+            className: "absolute left-[22%] top-[18%] hidden md:block",
+            size: "h-4 w-4",
+            delay: 0.5,
+            duration: 4.8,
+          },
+          {
+            className: "absolute right-[18%] top-[30%]",
+            size: "h-5 w-5",
+            delay: 1.4,
+            duration: 5.3,
+          },
+          {
+            className: "absolute right-[28%] bottom-[18%] hidden md:block",
+            size: "h-3.5 w-3.5",
+            delay: 0.9,
+            duration: 4.6,
+          },
+        ].map((item) => (
+          <motion.div
+            key={item.className}
+            animate={{
+              opacity: [0.1, 0.8, 0.14],
+              scale: [0.84, 1.08, 0.9],
+              rotate: [0, 45, 90],
+            }}
+            transition={{
+              duration: item.duration,
+              repeat: Infinity,
+              delay: item.delay,
+              ease: "easeInOut",
+            }}
+            className={`${item.className} ${item.size} relative`}
+          >
+            <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/80 to-transparent" />
+            <div className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-[#d6b87a] to-transparent" />
+            <div className="absolute inset-[34%] rounded-full bg-white/80 blur-[1px]" />
+          </motion.div>
+        ))}
+
         {berryList.map((berry) => (
           <motion.div
             key={berry.id}
@@ -1152,10 +1599,11 @@ export const Footer = ({ onEnter, setCursor }: any) => {
       id="footer"
       onEnter={onEnter}
       viewportOverride={{ amount: 0.2 }}
-      className="pt-16 md:pt-24 pb-12 bg-taiga-snow text-taiga-deep border-t border-taiga-deep/5 w-full"
+      className="pt-16 md:pt-24 pb-12 bg-taiga-snow text-taiga-deep border-t border-taiga-deep/5 w-full relative overflow-hidden"
     >
+      <FooterDecor />
       <div
-        className="px-6 md:px-10 lg:px-20"
+        className="px-6 md:px-10 lg:px-20 relative z-10"
         onMouseEnter={() => isDesktop && setCursor(false, "")}
       >
         <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-6 md:gap-16 mb-16 md:mb-24">
