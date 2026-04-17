@@ -1,24 +1,29 @@
-"use client";
+﻿"use client";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { withBasePath } from "@/lib/base-path";
 
-// --- ЛОГОТИП (ОБНОВЛЕНО: Аккуратный текстовый логотип) ---
+// --- Р›РћР“РћРўРРџ (РћР‘РќРћР’Р›Р•РќРћ: РђРєРєСѓСЂР°С‚РЅС‹Р№ С‚РµРєСЃС‚РѕРІС‹Р№ Р»РѕРіРѕС‚РёРї) ---
 export const Logo = () => (
   <div className="flex items-center gap-3 mix-blend-difference text-white">
-    {/* Иконка - стилизованное дерево/треугольник */}
+    {/* РРєРѕРЅРєР° - СЃС‚РёР»РёР·РѕРІР°РЅРЅРѕРµ РґРµСЂРµРІРѕ/С‚СЂРµСѓРіРѕР»СЊРЅРёРє */}
     <div className="flex items-center gap-3 mix-blend-difference">
-      {/* Используем стандартный тег img.
-       Убедитесь, что файл IMG_3054.PNG лежит в папке /public вашего проекта.
+      {/* РСЃРїРѕР»СЊР·СѓРµРј СЃС‚Р°РЅРґР°СЂС‚РЅС‹Р№ С‚РµРі img.
+       РЈР±РµРґРёС‚РµСЃСЊ, С‡С‚Рѕ С„Р°Р№Р» IMG_3054.PNG Р»РµР¶РёС‚ РІ РїР°РїРєРµ /public РІР°С€РµРіРѕ РїСЂРѕРµРєС‚Р°.
     */}
       <img
         src={withBasePath("/IMG_3054.PNG")}
         alt="Территория Тайги"
+        width={48}
+        height={72}
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
         className="h-18 w-auto object-contain"
-        // h-10 соответствует вашим исходным 40px (40 / 4 = 10)
+        // h-10 СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ РІР°С€РёРј РёСЃС…РѕРґРЅС‹Рј 40px (40 / 4 = 10)
       />
     </div>
-    {/* Текстовая часть */}
+    {/* РўРµРєСЃС‚РѕРІР°СЏ С‡Р°СЃС‚СЊ */}
     <div className="flex flex-col">
       <span className="font-serif text-lg leading-none tracking-[0.2em] uppercase font-bold">
         Территория
@@ -32,7 +37,7 @@ export const Logo = () => (
   </div>
 );
 
-// --- SVG ДЕКОР ---
+// --- SVG Р”Р•РљРћР  ---
 export const BerrySVG = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 120 120" className={className} fill="none">
     <defs>
@@ -137,7 +142,7 @@ export const OrnamentSVG = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// --- КОМПОНЕНТ КУРСОРА ---
+// --- РљРћРњРџРћРќР•РќРў РљРЈР РЎРћР Рђ ---
 export const Cursor = ({ active, text }: { active: boolean; text: string }) => {
   const mouse = { x: useMotionValue(0), y: useMotionValue(0) };
   const [isMobile, setIsMobile] = useState(true);
@@ -247,3 +252,4 @@ export const Section = ({
     </motion.section>
   );
 };
+

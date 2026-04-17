@@ -275,7 +275,7 @@ const HotelMedia = ({
           observer.disconnect();
         }
       },
-      { rootMargin: "260px 0px" },
+      { rootMargin: "180px 0px" },
     );
 
     observer.observe(node);
@@ -293,10 +293,11 @@ const HotelMedia = ({
           muted
           loop
           playsInline
-          preload="metadata"
+          disablePictureInPicture
+          preload="none"
           whileHover={isDesktop ? { scale: 1.05 } : {}}
           transition={{ duration: 0.7 }}
-          className="w-full h-full object-cover pointer-events-none"
+          className="w-full h-full object-cover pointer-events-none will-change-transform"
         />
       ) : (
         <motion.img
@@ -304,9 +305,10 @@ const HotelMedia = ({
           alt={alt}
           loading="lazy"
           decoding="async"
+          fetchPriority="low"
           whileHover={isDesktop ? { scale: 1.05 } : {}}
           transition={{ duration: 0.7 }}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover will-change-transform"
         />
       )}
     </div>
@@ -316,75 +318,137 @@ const HotelMedia = ({
 const HotelsDecor = () => {
   const berryAccents = [
     {
-      className: "absolute right-[8%] top-18 w-24 md:w-36 opacity-85",
-      duration: 7,
+      className: "absolute right-[10%] top-18 w-20 md:w-30 opacity-62",
+      duration: 7.5,
       delay: 0,
       y: [0, -10, 0],
       rotate: [-5, 2, -5],
     },
     {
-      className: "absolute left-[7%] bottom-28 w-20 md:w-28 opacity-70",
-      duration: 8,
+      className: "absolute left-[8%] bottom-24 w-16 md:w-22 opacity-52",
+      duration: 8.5,
       delay: 1.2,
       y: [0, 12, 0],
       rotate: [6, -2, 6],
     },
     {
-      className: "absolute left-[52%] top-24 hidden md:block w-16 opacity-55",
-      duration: 6.5,
-      delay: 0.7,
-      y: [0, -8, 0],
-      rotate: [-4, 4, -4],
-    },
-    {
-      className: "absolute right-[26%] bottom-16 hidden md:block w-12 opacity-40",
-      duration: 6,
+      className: "absolute right-[24%] bottom-18 hidden md:block w-10 opacity-34",
+      duration: 6.6,
       delay: 1.8,
       y: [0, -6, 0],
       rotate: [-3, 3, -3],
     },
-    {
-      className: "absolute left-[28%] top-[44%] hidden lg:block w-10 opacity-30",
-      duration: 5.5,
-      delay: 0.5,
-      y: [0, 7, 0],
-      rotate: [4, -2, 4],
-    },
   ];
 
   const sparkles = [
-    { className: "absolute left-[14%] top-24", size: "h-5 w-5", delay: 0.2, duration: 4.4 },
-    { className: "absolute left-[38%] top-[20%] hidden md:block", size: "h-4 w-4", delay: 1.1, duration: 5.2 },
-    { className: "absolute right-[18%] top-[34%]", size: "h-6 w-6", delay: 0.7, duration: 4.8 },
+    { className: "absolute left-[10%] top-22", size: "h-5 w-5", delay: 0.2, duration: 4.4 },
+    { className: "absolute left-[22%] top-[14%] hidden md:block", size: "h-3.5 w-3.5", delay: 1.5, duration: 5.4 },
+    { className: "absolute left-[34%] top-[22%] hidden md:block", size: "h-4 w-4", delay: 1.1, duration: 5.2 },
+    { className: "absolute right-[18%] top-[20%]", size: "h-6 w-6", delay: 0.7, duration: 4.8 },
+    { className: "absolute right-[36%] top-[30%] hidden lg:block", size: "h-3 w-3", delay: 1.9, duration: 4.9 },
+    { className: "absolute left-[18%] top-[48%] hidden md:block", size: "h-4 w-4", delay: 2.1, duration: 5.7 },
+    { className: "absolute left-[44%] top-[42%]", size: "h-5 w-5", delay: 0.9, duration: 4.7 },
+    { className: "absolute right-[11%] top-[44%] hidden md:block", size: "h-3.5 w-3.5", delay: 1.3, duration: 4.5 },
     { className: "absolute left-[22%] bottom-[18%]", size: "h-4 w-4", delay: 1.6, duration: 5.6 },
+    { className: "absolute left-[40%] bottom-[14%] hidden md:block", size: "h-3 w-3", delay: 0.6, duration: 4.3 },
     { className: "absolute right-[34%] bottom-[12%] hidden md:block", size: "h-5 w-5", delay: 0.4, duration: 4.9 },
-    { className: "absolute right-[8%] bottom-[32%] hidden lg:block", size: "h-3.5 w-3.5", delay: 1.9, duration: 4.2 },
+    { className: "absolute right-[14%] bottom-[24%] hidden lg:block", size: "h-3.5 w-3.5", delay: 1.9, duration: 4.2 },
+  ];
+
+  const auroraBands = [
+    {
+      className:
+        "absolute left-[-8%] top-[8%] h-56 w-[26rem] md:w-[34rem] rotate-[-14deg] rounded-full bg-[radial-gradient(circle_at_center,_rgba(236,213,151,0.18),_transparent_68%)] blur-3xl",
+      duration: 9.5,
+      y: [0, -10, 0],
+      x: [0, 14, 0],
+    },
+    {
+      className:
+        "absolute right-[4%] top-[24%] h-52 w-[22rem] md:w-[30rem] rotate-[16deg] rounded-full bg-[radial-gradient(circle_at_center,_rgba(123,39,49,0.16),_transparent_68%)] blur-3xl",
+      duration: 11,
+      y: [0, 12, 0],
+      x: [0, -12, 0],
+    },
+    {
+      className:
+        "absolute left-[18%] bottom-[6%] h-48 w-[20rem] md:w-[26rem] rotate-[8deg] rounded-full bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1),_transparent_72%)] blur-3xl",
+      duration: 10.5,
+      y: [0, 8, 0],
+      x: [0, 10, 0],
+    },
+  ];
+
+  const contourPaths = [
+    "M-80 180 C 180 70, 420 60, 710 175 S 1240 345, 1500 250",
+    "M-40 380 C 200 250, 420 240, 680 335 S 1180 520, 1490 430",
+    "M40 560 C 280 455, 520 470, 790 560 S 1220 690, 1480 625",
+    "M160 760 C 390 660, 650 645, 900 720 S 1270 815, 1510 760",
   ];
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-taiga-gold/10 blur-3xl" />
-      <div className="absolute right-[-8%] top-10 h-96 w-96 rounded-full bg-[#8e2c33]/15 blur-3xl" />
-      <div className="absolute left-[12%] bottom-16 h-56 w-56 rounded-full bg-white/6 blur-3xl" />
-      <div className="absolute left-[44%] top-[18%] h-44 w-44 rounded-full bg-[#f0d8a6]/6 blur-3xl" />
-      <div className="absolute right-[24%] bottom-[10%] h-52 w-52 rounded-full bg-[#7d2731]/10 blur-3xl" />
+      {auroraBands.map((item) => (
+        <motion.div
+          key={item.className}
+          animate={{ y: item.y, x: item.x, opacity: [0.45, 0.72, 0.45] }}
+          transition={{
+            duration: item.duration,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className={item.className}
+        />
+      ))}
+
+      <svg
+        viewBox="0 0 1440 900"
+        className="absolute inset-0 h-full w-full opacity-35"
+        preserveAspectRatio="none"
+        style={{
+          maskImage:
+            "linear-gradient(to bottom, transparent 2%, rgba(0,0,0,0.95) 18%, rgba(0,0,0,0.95) 82%, transparent 100%)",
+        }}
+      >
+        {contourPaths.map((path, index) => (
+          <motion.path
+            key={path}
+            d={path}
+            fill="none"
+            stroke={index % 2 === 0 ? "rgba(242, 220, 170, 0.28)" : "rgba(255, 255, 255, 0.12)"}
+            strokeWidth={index === 0 ? "1.8" : "1.2"}
+            strokeLinecap="round"
+            strokeDasharray={index % 2 === 0 ? "2 14" : "1 12"}
+            initial={{ pathLength: 0.92, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 1 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 1.4 + index * 0.2, ease: "easeOut" }}
+          />
+        ))}
+      </svg>
+
+      <div className="absolute -left-14 top-18 h-56 w-56 rounded-full bg-taiga-gold/8 blur-3xl" />
+      <div className="absolute right-[-4%] top-12 h-72 w-72 rounded-full bg-[#8e2c33]/10 blur-3xl" />
+      <div className="absolute left-[16%] bottom-14 h-40 w-40 rounded-full bg-white/5 blur-3xl" />
+      <div className="absolute left-[46%] top-[20%] h-28 w-28 rounded-full bg-[#f0d8a6]/5 blur-3xl" />
+      <div className="absolute right-[28%] bottom-[12%] h-36 w-36 rounded-full bg-[#7d2731]/7 blur-3xl" />
 
       <motion.div
         initial={{ opacity: 0, x: -40, y: 20 }}
-        whileInView={{ opacity: 0.22, x: 0, y: 0 }}
+        whileInView={{ opacity: 0.13, x: 0, y: 0 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
-        className="absolute -left-8 top-28 w-64 md:w-[26rem] rotate-[9deg]"
+        className="absolute -left-10 top-30 w-56 md:w-[22rem] rotate-[8deg]"
       >
         <BranchSVG className="drop-shadow-2xl" />
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, x: 40, y: -20 }}
-        whileInView={{ opacity: 0.18, x: 0, y: 0 }}
+        whileInView={{ opacity: 0.11, x: 0, y: 0 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 1.2, delay: 0.15, ease: "easeOut" }}
-        className="absolute right-[-2rem] bottom-24 w-72 md:w-[30rem] scale-x-[-1] rotate-[-8deg]"
+        className="absolute right-[-1rem] bottom-20 w-60 md:w-[24rem] scale-x-[-1] rotate-[-7deg]"
       >
         <BranchSVG className="drop-shadow-2xl" />
       </motion.div>
@@ -409,8 +473,8 @@ const HotelsDecor = () => {
         <motion.div
           key={item.className}
           animate={{
-            opacity: [0.18, 0.95, 0.22],
-            scale: [0.8, 1.12, 0.84],
+            opacity: [0.12, 0.88, 0.16],
+            scale: [0.82, 1.1, 0.86],
             rotate: [0, 45, 90],
           }}
           transition={{
@@ -421,9 +485,9 @@ const HotelsDecor = () => {
           }}
           className={`${item.className} ${item.size} relative`}
         >
-          <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/90 to-transparent" />
-          <div className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-[#f5dfac] to-transparent" />
-          <div className="absolute inset-[34%] rounded-full bg-white/90 blur-[1.5px]" />
+          <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/80 to-transparent" />
+          <div className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-[#f5dfac]/90 to-transparent" />
+          <div className="absolute inset-[34%] rounded-full bg-white/85 blur-[1px]" />
         </motion.div>
       ))}
     </div>
@@ -552,6 +616,7 @@ export const Hotels = ({ onEnter, setCursor, setHoverBg, setTheme }: any) => {
                     alt={h.name}
                     loading="lazy"
                     decoding="async"
+                    fetchPriority="low"
                     whileHover={isDesktop ? { scale: 1.05 } : {}}
                     transition={{ duration: 0.7 }}
                     className="w-full h-full object-cover"
@@ -643,6 +708,7 @@ export const Restaurants = ({ onEnter, setCursor }: any) => {
                   alt={item.name}
                   loading="lazy"
                   decoding="async"
+                  fetchPriority="low"
                 />
 
                 {/* Второе фото (Блюдо) - появляется сбоку при наведении */}
@@ -653,6 +719,7 @@ export const Restaurants = ({ onEnter, setCursor }: any) => {
                     alt="Dish"
                     loading="lazy"
                     decoding="async"
+                    fetchPriority="low"
                   />
                 </motion.div>
 
@@ -743,6 +810,7 @@ export const Events = ({ onEnter, setCursor }: any) => {
                   className="w-full h-full object-cover md:group-hover:scale-105 transition-transform duration-1000 md:group-hover:grayscale-0"
                   loading="lazy"
                   decoding="async"
+                  fetchPriority="low"
                 />
 
                 {/* Вместимость и стрелка */}
@@ -829,6 +897,7 @@ export const Career = ({ onEnter, setCursor }: any) => {
               alt="Career at Taiga"
               loading="lazy"
               decoding="async"
+              fetchPriority="low"
             />
             <div className="absolute inset-0 bg-black/10" />
             <div className="absolute bottom-8 left-8 text-white">
@@ -1032,6 +1101,7 @@ export const News = ({ onEnter, setCursor, isDesktop }: any) => {
                     className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
                     loading="lazy"
                     decoding="async"
+                    fetchPriority="low"
                   />
                   <div className="absolute inset-0 bg-taiga-deep/10 group-hover:bg-transparent transition-colors duration-700" />
                 </div>
