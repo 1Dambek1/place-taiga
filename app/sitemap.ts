@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+export const dynamic = "force-static";
+
 const basePath =
   process.env.NEXT_PUBLIC_BASE_PATH ||
   (process.env.GITHUB_ACTIONS === "true" ? "/place-taiga" : "");
