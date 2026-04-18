@@ -179,12 +179,17 @@ export default function Home() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
     lenisRef.current = lenis;
+    let rafId = 0;
+
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+
+    rafId = requestAnimationFrame(raf);
+
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
     };
   }, []);

@@ -268,7 +268,9 @@ const HotelMedia = ({
   isDesktop: boolean;
 }) => {
   const mediaRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [isInView, setIsInView] = useState(false);
   const posterSrc = poster ? toPublicPath(poster) : toPublicPath(src);
 
   useEffect(() => {
@@ -277,12 +279,12 @@ const HotelMedia = ({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        setIsInView(entry.isIntersecting);
         if (entry.isIntersecting) {
           setShouldLoadVideo(true);
-          observer.disconnect();
         }
       },
-      { rootMargin: "180px 0px" },
+      { rootMargin: "120px 0px" },
     );
 
     observer.observe(node);
@@ -290,10 +292,23 @@ const HotelMedia = ({
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !shouldLoadVideo) return;
+
+    if (isInView) {
+      video.play().catch(() => {});
+      return;
+    }
+
+    video.pause();
+  }, [isInView, shouldLoadVideo]);
+
   return (
     <div ref={mediaRef} className="w-full h-full">
       {shouldLoadVideo ? (
         <motion.video
+          ref={videoRef}
           src={encodeURI(toPublicPath(src))}
           poster={posterSrc}
           autoPlay
@@ -1369,7 +1384,7 @@ export const News = ({ onEnter, setCursor, isDesktop }: any) => {
   ];
   const [berryList, setBerryList] = useState<any[]>([]);
   useEffect(() => {
-    const generatedBerries = Array.from({ length: 15 }).map((_, i) => ({
+    const generatedBerries = Array.from({ length: 11 }).map((_, i) => ({
       id: i,
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 45}%`,
@@ -1377,6 +1392,7 @@ export const News = ({ onEnter, setCursor, isDesktop }: any) => {
       blur: Math.random() > 0.8 ? "2px" : "0px",
       delay: Math.random() * 5,
       duration: Math.random() * 3 + 2,
+      revealDelay: Math.random() * 1.2,
     }));
     setBerryList(generatedBerries);
   }, []);
@@ -1484,7 +1500,7 @@ export const News = ({ onEnter, setCursor, isDesktop }: any) => {
             key={berry.id}
             initial={{ opacity: 0, scale: 0 }}
             whileInView={{ opacity: 0.8, scale: 1 }}
-            transition={{ delay: Math.random() * 1.2, duration: 1 }} // Здесь Math.random тоже лучше заменить на фиксированное из стейта, если ошибка останется
+            transition={{ delay: berry.revealDelay, duration: 1 }}
             className="absolute rounded-full"
             style={{
               top: berry.top,
@@ -1677,3 +1693,4 @@ export const Footer = ({ onEnter, setCursor }: any) => {
     </Section>
   );
 };
+
